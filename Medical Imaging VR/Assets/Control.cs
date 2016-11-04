@@ -27,12 +27,6 @@ public class Control : MonoBehaviour
     bool isScaling;
     float scale; // same for the 3 axes
 
-    //threshold control
-    public Renderer rend;
-    float threshold = 0.21f;
-    bool threshold_up;
-    bool threshold_down;
-
     void Awake()
     {
     }
@@ -40,8 +34,6 @@ public class Control : MonoBehaviour
     void Start()
     {
         scale = Mathf.Clamp(this.transform.localScale[0], scaleMin, scaleMax);
-        rend = GetComponent<Renderer>();
-        rend.material.shader = Shader.Find("Custom/Cadaver");
     }
 
     void Update()
@@ -104,28 +96,5 @@ public class Control : MonoBehaviour
             this.transform.localScale = new Vector3(scale, scale, scale);
             if (scroll == 0) isScaling = false;
         }
-
-        //threshold control
-        threshold_up = Input.GetKey(KeyCode.KeypadPlus);
-        threshold_down = Input.GetKey(KeyCode.KeypadMinus);
-
-        if (threshold_up)
-        {
-            threshold += 0.01f;
-            if (threshold > 1.0f)
-            {
-                threshold = 1.0f;
-            }
-        }
-        if (threshold_down)
-        {
-            threshold -= 0.01f;
-            if (threshold < 0.0f)
-            {
-                threshold = 0.0f;
-            }
-        }
-        rend.material.SetFloat("_DataMin", threshold);
-
     }
 }
