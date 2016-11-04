@@ -1,8 +1,8 @@
-/[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
+/Medical Imaging VR/[Ll]ibrary/
+/Medical Imaging VR/[Tt]emp/
+/Medical Imaging VR/[Oo]bj/
+/Medical Imaging VR/[Bb]uild/
+/Medical Imaging VR/[Bb]uilds/
 /Assets/AssetStoreTools*
 /Medical Imaging VR/Assets/Resources
 *.asset
