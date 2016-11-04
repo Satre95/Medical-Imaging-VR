@@ -102,13 +102,13 @@ public class LoadLegend : MonoBehaviour
         return "Legend/" + folders[folders.Length - 1] + "/";
     }
 
-    void setShaderSliceAxes(int numImages, int numSlices)
+    void setShaderSliceAxes(float numImages, float numSlices)
     {
         //get the material
         Material mat = GetComponent<Renderer>().material;
 
         //Set 2nd slice axis to numImages cutoff, as don't want to sample empty voxels.
-        mat.SetFloat("_SliceAxis2Max", numImages / numSlices);
-
+        mat.SetFloat("_SliceAxis2Max",  numImages / numSlices);
+        mat.SetFloat("_SliceAxis2Min", 0.0001f);
     }
 }
