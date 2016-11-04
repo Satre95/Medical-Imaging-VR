@@ -62,6 +62,9 @@ public class LoadLegend : MonoBehaviour
         // assign it to the material of the parent object
         GetComponent<Renderer>().material.SetTexture("Legend_Data", legendVolume);
 
+        //Update the shader slice axes;
+        setShaderSliceAxes(numImages, numSlices);
+
         //As a sanity check, don't actually write out files if running from a compiled binary.
 #if UNITY_EDITOR
         //Write out the loaded legend to an asset file for quick loading in the future.
@@ -97,5 +100,15 @@ public class LoadLegend : MonoBehaviour
 
         //The last element should be the folder name.
         return "Legend/" + folders[folders.Length - 1] + "/";
+    }
+
+    void setShaderSliceAxes(int numImages, int numSlices)
+    {
+        //get the material
+        Material mat = GetComponent<Renderer>().material;
+
+        //Set 2nd slice axis to numImages cutoff, as don't want to sample empty voxels.
+        mat.SetFloat("_SliceAxis2Max", numImages / numSlices);
+
     }
 }
