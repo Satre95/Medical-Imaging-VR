@@ -68,7 +68,7 @@ public class LoadLegend : MonoBehaviour
         //As a sanity check, don't actually write out files if running from a compiled binary.
 #if UNITY_EDITOR
         //Write out the loaded legend to an asset file for quick loading in the future.
-        AssetDatabase.CreateAsset(legendVolume, "Assets/Legend Assets/Legend_" + legendID.ToString() + ".asset");
+        AssetDatabase.CreateAsset(legendVolume, "Assets/Resources/Legend Assets/Legend_" + legendID.ToString() + ".asset");
 #endif
     }
 
