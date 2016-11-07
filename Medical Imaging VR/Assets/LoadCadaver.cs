@@ -61,7 +61,7 @@ public class LoadCadaver : MonoBehaviour
         GetComponent<Renderer>().material.SetTexture("Cadaver_Data", volumeData);
         // save it as an asset for re-use
 #if UNITY_EDITOR
-        AssetDatabase.CreateAsset(volumeData, "Assets/Resources/Cadaver Assets/Cadaver_" + legendLoader.legendID.ToString() + ".asset");
+        AssetDatabase.CreateAsset(volumeData, "Assets/Resources/Cadaver Assets/Cadaver_" + legendLoader.systemID.ToString() + ".asset");
 #endif
     }
 

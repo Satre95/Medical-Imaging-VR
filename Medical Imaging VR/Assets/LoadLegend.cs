@@ -13,20 +13,25 @@ using System.IO;
 public class LoadLegend : MonoBehaviour
 {
 
-    public int legendID = 1;
+    public int systemID = 1;
+    public int subsystemID = 1;
+    public int bodyPartID = 1;
     public int startIndex = 60;
     public int endIndex = 1010;
     public int indexIncrement = 5;
 
     private List<Color> imageColors;
 
+    private static string LegendSystemPath = "";
+    private static string AssetsSystemPath = "Assets/Legend Assets/";
+
     // Use this for initialization
     void Start()
     {
+        LegendSystemPath = Application.dataPath + "/Resources/Legend/";
         imageColors = new List<Color>();
 
-        string folderPath = findLegendFolderWithID(legendID);
-
+        string folderPath = constructPathForSelectedIDs();
         //Precalc the tex dimensions by loading the first image.
         Texture2D first = Resources.Load(folderPath + startIndex.ToString().PadLeft(4, '0')) as Texture2D;
         int width = (int)System.Math.Pow(2, System.Math.Ceiling(System.Math.Log(first.width) / System.Math.Log(2)));
@@ -67,8 +72,7 @@ public class LoadLegend : MonoBehaviour
 
         //As a sanity check, don't actually write out files if running from a compiled binary.
 #if UNITY_EDITOR
-        //Write out the loaded legend to an asset file for quick loading in the future.
-        AssetDatabase.CreateAsset(legendVolume, "Assets/Resources/Legend Assets/Legend_" + legendID.ToString() + ".asset");
+        writeLoadedAssetsToFile(legendVolume);
 #endif
     }
 
@@ -84,13 +88,53 @@ public class LoadLegend : MonoBehaviour
         }
     }
 
+
     /**
-     * Function to find the corresponding legend data folder for the given legend ID
+     * Function that constructs the final path that corresponds the user selected IDs. 
+     * Use 0 to signify that a given system does not have any subsytems and/or body parts/
+     * Eg. In order to show the Parietal bone:
+     *      systemID = 1
+     *      subsystemID = 1
+     *      bodyPartID = 2
      */
-    string findLegendFolderWithID( int id )
+    string constructPathForSelectedIDs()
     {
-        string dataPath = Application.dataPath;
-        string[] legendDirs = Directory.GetDirectories(dataPath + "/Resources/Legend/", "(" + id.ToString() + ")*");
+        string finalPath = LegendSystemPath;
+
+        //Error check, there must be a system selected.
+        if (systemID <= 0)
+            systemID = 1; //Default to skeletal system.
+        
+        //Error check, selecting body part necessitates selecting a subsystem.
+        if (bodyPartID > 0 && subsystemID <= 0)
+            throw new System.Exception("Illegal Arguments: Cannot select body part without first selecting system.");
+
+        string systemFolder = findSystemFolderWithID(systemID);
+        finalPath += systemFolder;
+
+        if(subsystemID > 0)
+        {
+            string subsystemFolder = findFolderWithIDFromParent(subsystemID, finalPath);
+            finalPath += subsystemFolder;
+        }
+
+        if( bodyPartID > 0)
+        {
+            string bodyPartFolder = findFolderWithIDFromParent(bodyPartID, finalPath);
+            finalPath += bodyPartFolder;
+        }
+
+        return finalPath;
+
+    }
+
+    /**
+     * Function to find the corresponding System data folder for the given legend ID
+     * Eg. systems are Skeletal, Articular.
+     */
+    string findSystemFolderWithID( int anId )
+    {
+        string[] legendDirs = Directory.GetDirectories(LegendSystemPath, "(" + anId.ToString() + ")*");
 
         //Assuming unique dir and system ids, get the first.
         string folderPath = legendDirs[0];
@@ -99,8 +143,31 @@ public class LoadLegend : MonoBehaviour
         string[] folders = folderPath.Split('/');
 
         //The last element should be the folder name.
-        return "Legend/" + folders[folders.Length - 1] + "/";
+        return folders[folders.Length - 1] + "/";
     }
+
+    /**
+     * Finds the folder corresponding to the given subsystem/body part ID in the given parent folder.
+     * Eg. anID = 1 for subsystem Cranium in parent system Skeletal.
+     * Eg. anID = 2 for body part Parietal bone in parent subsystem Cranium
+     */
+    string findFolderWithIDFromParent( int anId, string parentSystemPath )
+    {
+        if (anId <= 0)
+            return "";
+
+        //Get the list of subsystem folders
+        string[] subsystemFolders = Directory.GetDirectories(parentSystemPath, "(" + anId + ")*");
+
+        //Assuming unique IDs, first match should be folder.
+        string folderPath = subsystemFolders[0];
+
+        //Extract just the last dir name from the path
+        string[] folders = folderPath.Split('/');
+
+        return folders[folders.Length - 1] + "/";
+    }
+
 
     void setShaderSliceAxes(float numImages, float numSlices)
     {
@@ -109,6 +176,17 @@ public class LoadLegend : MonoBehaviour
 
         //Set 2nd slice axis to numImages cutoff, as don't want to sample empty voxels.
         mat.SetFloat("_SliceAxis2Max",  numImages / numSlices);
+        //Getting a weird artifact when the min Y-slice axis is not 0, this is a quick fix.
+        //TODO: FIGURE THIS SHIT OUT.
         mat.SetFloat("_SliceAxis2Min", 0.0001f);
+    }
+
+    /**
+     * Write the loaded legend files to disk as a .asset.
+     */
+    void writeLoadedAssetsToFile(Texture3D legendVolume)
+    {
+        //TODO: Update this function to write to the new directory structure.
+        AssetDatabase.CreateAsset(legendVolume, "Assets/Resources/Legend Assets/Legend_" + systemID.ToString() + ".asset");
     }
 }
