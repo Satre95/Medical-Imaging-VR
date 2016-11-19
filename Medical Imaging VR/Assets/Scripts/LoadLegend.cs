@@ -203,7 +203,6 @@ public class LoadLegend : MonoBehaviour
      */
     void writeLoadedAssetsToFile(Texture3D legendVolume)
     {
-        //To convert the legend images path to the asset path, replace "Legend" with "Legend Assets"
         string filename = systemID + "_" + subsystemID + "_" + bodyPartID + "-Asset.asset";
         AssetDatabase.CreateAsset(legendVolume, "Assets/Resources/Legend Assets/" + filename);
     }
