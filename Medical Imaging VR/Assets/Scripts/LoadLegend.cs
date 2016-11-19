@@ -23,7 +23,6 @@ public class LoadLegend : MonoBehaviour
     private List<Color> imageColors;
 
     private static string LegendSystemPath = "";
-    private static string AssetsSystemPath = "Assets/Legend Assets/";
 
     // Use this for initialization
     void Start()
@@ -200,10 +199,12 @@ public class LoadLegend : MonoBehaviour
 
     /**
      * Write the loaded legend files to disk as a .asset.
+     * File is written with name of format systemID_subSystemID_bodyPartID-Asset.asset
      */
     void writeLoadedAssetsToFile(Texture3D legendVolume)
     {
-        //TODO: Update this function to write to the new directory structure.
-        AssetDatabase.CreateAsset(legendVolume, "Assets/Resources/Legend Assets/Legend_" + systemID.ToString() + ".asset");
+        //To convert the legend images path to the asset path, replace "Legend" with "Legend Assets"
+        string filename = systemID + "_" + subsystemID + "_" + bodyPartID + "-Asset.asset";
+        AssetDatabase.CreateAsset(legendVolume, "Assets/Resources/Legend Assets/" + filename);
     }
 }
