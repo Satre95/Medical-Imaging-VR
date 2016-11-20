@@ -33,6 +33,7 @@ public class LoadLegend : MonoBehaviour
 
         string folderPath = constructPathForSelectedIDs();
         //Precalc the tex dimensions by loading the first image.
+        //TODO
         Texture2D first = Resources.Load(folderPath + startIndex.ToString().PadLeft(4, '0')) as Texture2D;
         int width = (int)System.Math.Pow(2, System.Math.Ceiling(System.Math.Log(first.width) / System.Math.Log(2)));
         int height = (int)System.Math.Pow(2, System.Math.Ceiling(System.Math.Log(first.height) / System.Math.Log(2)));
