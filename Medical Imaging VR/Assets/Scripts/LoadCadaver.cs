@@ -15,11 +15,14 @@ public class LoadCadaver : MonoBehaviour
     private List<Color> imageColors;
     private static string folderPath = "Cadaver/";
 
+
+    private LoadLegend legendLoader;
+
     // Use this for initialization
     void Start()
     {
         //Get a ref to the legend loader script.
-        LoadLegend legendLoader = GetComponent<LoadLegend>();
+        legendLoader = GetComponent<LoadLegend>();
         imageColors = new List<Color>();
 
         int startIndex = legendLoader.startIndex;
@@ -61,7 +64,7 @@ public class LoadCadaver : MonoBehaviour
         GetComponent<Renderer>().material.SetTexture("Cadaver_Data", volumeData);
         // save it as an asset for re-use
 #if UNITY_EDITOR
-        AssetDatabase.CreateAsset(volumeData, "Assets/Resources/Cadaver Assets/Cadaver_" + legendLoader.systemID.ToString() + ".asset");
+        writeCadaverAssetToFile(volumeData);
 #endif
     }
 
@@ -72,6 +75,12 @@ public class LoadCadaver : MonoBehaviour
         {
             imageColors.Add(tempColors[i]);
         }
+    }
+
+    void writeCadaverAssetToFile(Texture3D volData)
+    {
+        string filename = legendLoader.systemID + "_" + legendLoader.subsystemID + "_" + legendLoader.bodyPartID + "-Asset.asset";
+        AssetDatabase.CreateAsset(volData, "Assets/Resources/Cadaver Assets/" + filename);
     }
 
 }

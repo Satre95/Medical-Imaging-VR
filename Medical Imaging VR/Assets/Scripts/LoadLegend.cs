@@ -23,7 +23,6 @@ public class LoadLegend : MonoBehaviour
     private List<Color> imageColors;
 
     private static string LegendSystemPath = "";
-    private static string AssetsSystemPath = "Assets/Legend Assets/";
 
     // Use this for initialization
     void Start()
@@ -100,7 +99,7 @@ public class LoadLegend : MonoBehaviour
      */
     string constructPathForSelectedIDs()
     {
-        string finalPath = LegendSystemPath;
+        string path = LegendSystemPath;
 
         //Error check, there must be a system selected.
         if (systemID <= 0)
@@ -111,18 +110,35 @@ public class LoadLegend : MonoBehaviour
             throw new System.Exception("Illegal Arguments: Cannot select body part without first selecting system.");
 
         string systemFolder = findSystemFolderWithID(systemID);
-        finalPath += systemFolder;
+        path += systemFolder;
 
         if(subsystemID > 0)
         {
-            string subsystemFolder = findFolderWithIDFromParent(subsystemID, finalPath);
-            finalPath += subsystemFolder;
+            string subsystemFolder = findFolderWithIDFromParent(subsystemID, path);
+            path += subsystemFolder;
         }
 
         if( bodyPartID > 0)
         {
-            string bodyPartFolder = findFolderWithIDFromParent(bodyPartID, finalPath);
-            finalPath += bodyPartFolder;
+            string bodyPartFolder = findFolderWithIDFromParent(bodyPartID, path);
+            path += bodyPartFolder;
+        }
+
+        //Trim the path to only be relative to the Resources folder
+        string[] folders = path.Split('/');
+        int i;
+        for(i = 0; i < folders.Length; i++)
+        {
+            if(folders[i] == "Legend")
+            {
+                break;
+            }
+        }
+
+        string finalPath = "";
+        for(int j = i; j < folders.Length - 1; j++) //Length - 1 to avoid extra slash on the end.
+        {
+            finalPath += folders[j] + "/";
         }
 
         return finalPath;
@@ -184,10 +200,11 @@ public class LoadLegend : MonoBehaviour
 
     /**
      * Write the loaded legend files to disk as a .asset.
+     * File is written with name of format systemID_subSystemID_bodyPartID-Asset.asset
      */
     void writeLoadedAssetsToFile(Texture3D legendVolume)
     {
-        //TODO: Update this function to write to the new directory structure.
-        AssetDatabase.CreateAsset(legendVolume, "Assets/Resources/Legend Assets/Legend_" + systemID.ToString() + ".asset");
+        string filename = systemID + "_" + subsystemID + "_" + bodyPartID + "-Asset.asset";
+        AssetDatabase.CreateAsset(legendVolume, "Assets/Resources/Legend Assets/" + filename);
     }
 }
