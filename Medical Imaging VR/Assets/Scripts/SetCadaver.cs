@@ -5,11 +5,12 @@ using System.IO;
 
 public class SetCadaver : MonoBehaviour {
 
+
 	// Use this for initialization
 	void Start () {
-        SetLegend legendSetter = GetComponent<SetLegend>();
 
-        Texture3D cadaverVolume = Resources.Load("Cadaver Assets/Cadaver_" + legendSetter.legendID, typeof(Texture3D)) as Texture3D;
+        string fname = constructAssetFilename();
+        Texture3D cadaverVolume = Resources.Load("Cadaver Assets/" + fname, typeof(Texture3D)) as Texture3D;
         if (cadaverVolume == null)
             throw new FileNotFoundException();
 
@@ -17,4 +18,14 @@ public class SetCadaver : MonoBehaviour {
         GetComponent<Renderer>().material.SetTexture("Cadaver_Data", cadaverVolume);
 	}
 
+    string constructAssetFilename()
+    {
+        SetLegend legendSetter = GetComponent<SetLegend>();
+        //Get the IDs from legend setter.
+        int systemID = legendSetter.systemID;
+        int subsystemID = legendSetter.subsystemID;
+        int bodyPartID = legendSetter.bodyPartID;
+
+        return (systemID + "_" + subsystemID + "_" + bodyPartID + "-Asset");
+    }
 }
