@@ -9,13 +9,11 @@ using System.IO;
 public class SetLegend : MonoBehaviour
 {
 
-    public int systemID = 1;
-    public int subsystemID = 1;
-    public int bodyPartID = 1;
-
+    public DisplayBody bodyDisplayer;
     // Use this for initialization
     void Start()
     {
+
         string filename = constructAssetFilename();
         Texture3D legendVolume = Resources.Load("Legend Assets/" + filename, typeof(Texture3D)) as Texture3D;
 
@@ -26,11 +24,24 @@ public class SetLegend : MonoBehaviour
         GetComponent<Renderer>().material.SetTexture("Legend_Data", legendVolume);
     }
 
+    void Update()
+    {
+
+    }
+
     /**
      * Function to determine the file name from the chosen IDs
      */
     string constructAssetFilename()
     {
-        return (systemID + "_" + subsystemID + "_" + bodyPartID + "-Asset");
+        GameObject displayBodyComponent = GameObject.Find("SceneControl");
+        if (displayBodyComponent == null)
+        {
+            //TODO Figure out how to get gameobject variable from other scene
+            Debug.LogError("failed to find object :(");
+            this.enabled = false;
+        }
+        bodyDisplayer = displayBodyComponent.GetComponent<DisplayBody>();
+        return (bodyDisplayer.DisplayId + "-Asset");
     }
 }

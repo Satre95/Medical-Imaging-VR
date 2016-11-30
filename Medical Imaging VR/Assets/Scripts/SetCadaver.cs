@@ -6,8 +6,10 @@ using System.IO;
 public class SetCadaver : MonoBehaviour {
 
 
-	// Use this for initialization
-	void Start () {
+    public DisplayBody bodyDisplayer;
+    // Use this for initialization
+    void Start()
+    {
 
         string fname = constructAssetFilename();
         Texture3D cadaverVolume = Resources.Load("Cadaver Assets/" + fname, typeof(Texture3D)) as Texture3D;
@@ -16,16 +18,18 @@ public class SetCadaver : MonoBehaviour {
 
         //set the shader property.
         GetComponent<Renderer>().material.SetTexture("Cadaver_Data", cadaverVolume);
-	}
+    }
 
     string constructAssetFilename()
     {
-        SetLegend legendSetter = GetComponent<SetLegend>();
-        //Get the IDs from legend setter.
-        int systemID = legendSetter.systemID;
-        int subsystemID = legendSetter.subsystemID;
-        int bodyPartID = legendSetter.bodyPartID;
-
-        return (systemID + "_" + subsystemID + "_" + bodyPartID + "-Asset");
+        GameObject displayBodyComponent = GameObject.Find("SceneControl");
+        if (displayBodyComponent == null)
+        {
+            //TODO Figure out how to get gameobject variable from other scene
+            //Debug.LogError("failed to find object :(");
+            this.enabled = false;
+        }
+        bodyDisplayer = displayBodyComponent.GetComponent<DisplayBody>();
+        return (bodyDisplayer.DisplayId + "-Asset");
     }
 }
