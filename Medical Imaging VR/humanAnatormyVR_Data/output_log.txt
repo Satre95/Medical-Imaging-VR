@@ -1,0 +1,45 @@
+Initialize engine version: 5.4.1f1 (649f48bbbf0f)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 960M (ID=0x139b)
+    Vendor:   NVIDIA
+    VRAM:     2018 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\kammy\Desktop\VR_Research\Medical-Image-VR\Medical Imaging VR\humanAnatormyVR_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\kammy\Desktop\VR_Research\Medical-Image-VR\Medical Imaging VR\humanAnatormyVR_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\kammy\Desktop\VR_Research\Medical-Image-VR\Medical Imaging VR\humanAnatormyVR_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\kammy\Desktop\VR_Research\Medical-Image-VR\Medical Imaging VR\humanAnatormyVR_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\kammy\Desktop\VR_Research\Medical-Image-VR\Medical Imaging VR\humanAnatormyVR_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\kammy\Desktop\VR_Research\Medical-Image-VR\Medical Imaging VR\humanAnatormyVR_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\kammy\Desktop\VR_Research\Medical-Image-VR\Medical Imaging VR\humanAnatormyVR_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\kammy\Desktop\VR_Research\Medical-Image-VR\Medical Imaging VR\humanAnatormyVR_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.044 seconds
+Platform assembly: C:\Users\kammy\Desktop\VR_Research\Medical-Image-VR\Medical Imaging VR\humanAnatormyVR_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\kammy\Desktop\VR_Research\Medical-Image-VR\Medical Imaging VR\humanAnatormyVR_Data\Managed\System.dll (this message is harmless)
+desktop: 3840x2160 60Hz; virtual: 7440x2503 at -3600,-343
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 0.727309 ms
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 2a50 -> priority: 1 
+  Thread -> id: 1b38 -> priority: 1 
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.075362 ms
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 175.
+Total: 0.188444 ms (FindLiveObjects: 0.024888 ms CreateObjectMapping: 0.010666 ms MarkObjects: 0.144987 ms  DeleteObjects: 0.007111 ms)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at SetCadaver.constructAssetFilename () [0x00000] in <filename unknown>:0 
+  at SetCadaver.Start () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at SetLegend.constructAssetFilename () [0x00000] in <filename unknown>:0 
+  at SetLegend.Start () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
