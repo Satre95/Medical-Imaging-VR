@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Control : MonoBehaviour
 {
@@ -95,6 +96,12 @@ public class Control : MonoBehaviour
             scale = Mathf.Clamp(scale, scaleMin, scaleMax);
             this.transform.localScale = new Vector3(scale, scale, scale);
             if (scroll == 0) isScaling = false;
+        }
+
+        //going back to scene
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            SceneManager.LoadScene("Menu Scene", LoadSceneMode.Single);
         }
     }
 }

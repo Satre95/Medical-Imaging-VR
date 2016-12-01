@@ -30,6 +30,7 @@ public class SetCadaver : MonoBehaviour {
             this.enabled = false;
         }
         bodyDisplayer = displayBodyComponent.GetComponent<DisplayBody>();
+        Destroy(displayBodyComponent);
         return (bodyDisplayer.DisplayId + "-Asset");
     }
 }
