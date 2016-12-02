@@ -15,6 +15,7 @@ public class SetLegend : MonoBehaviour
     {
 
         string filename = constructAssetFilename();
+        //string filename = "13_1_1-Asset";
         Texture3D legendVolume = Resources.Load("Legend Assets/" + filename, typeof(Texture3D)) as Texture3D;
 
         if (legendVolume == null) //If the asset file can't be found, then throw an exception.

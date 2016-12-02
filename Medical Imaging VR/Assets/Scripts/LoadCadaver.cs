@@ -50,6 +50,7 @@ public class LoadCadaver : MonoBehaviour
 
         //Pad the color array with empty data to fill in for missing images.
         Texture2D emptyTex = new Texture2D(width, height);
+        
         for(int j = numImages; j < numSlices; j++)
         {
             addImageColorToList(emptyTex);

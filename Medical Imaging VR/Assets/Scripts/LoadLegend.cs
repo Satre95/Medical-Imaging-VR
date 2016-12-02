@@ -51,6 +51,13 @@ public class LoadLegend : MonoBehaviour
 
         //Need to pad the 3D tex along the z axis with empty data due to the round off.
         Texture2D emptyTex = new Texture2D(width, height);
+        Color[] emptyTexColors = emptyTex.GetPixels();
+        for(int a = 0; a < emptyTexColors.Length; a++)
+        {
+            emptyTexColors[a] = Color.white;
+        }
+        emptyTex.SetPixels(emptyTexColors);
+        emptyTex.Apply();
         for(int j = numImages; j < numSlices; j++)
         {
             addImageColorToList(emptyTex);
@@ -204,6 +211,9 @@ public class LoadLegend : MonoBehaviour
      */
     void writeLoadedAssetsToFile(Texture3D legendVolume)
     {
+        //Load an instance of the base CadaverBody Material.
+
+
         string filename = systemID + "_" + subsystemID + "_" + bodyPartID + "-Asset.asset";
         AssetDatabase.CreateAsset(legendVolume, "Assets/Resources/Legend Assets/" + filename);
     }

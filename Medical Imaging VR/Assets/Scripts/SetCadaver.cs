@@ -12,6 +12,7 @@ public class SetCadaver : MonoBehaviour {
     {
 
         string fname = constructAssetFilename();
+        //string fname = "13_1_1-Asset";
         Texture3D cadaverVolume = Resources.Load("Cadaver Assets/" + fname, typeof(Texture3D)) as Texture3D;
         if (cadaverVolume == null)
             throw new FileNotFoundException();
