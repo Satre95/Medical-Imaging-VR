@@ -205,6 +205,7 @@ public class LoadLegend : MonoBehaviour
         mat.SetFloat("_SliceAxis2Min", 0.0001f);
     }
 
+#if UNITY_EDITOR
     /**
      * Write the loaded legend files to disk as a .asset.
      * File is written with name of format systemID_subSystemID_bodyPartID-Asset.asset
@@ -212,9 +213,8 @@ public class LoadLegend : MonoBehaviour
     void writeLoadedAssetsToFile(Texture3D legendVolume)
     {
         //Load an instance of the base CadaverBody Material.
-
-
         string filename = systemID + "_" + subsystemID + "_" + bodyPartID + "-Asset.asset";
         AssetDatabase.CreateAsset(legendVolume, "Assets/Resources/Legend Assets/" + filename);
     }
+#endif
 }

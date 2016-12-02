@@ -78,10 +78,11 @@ public class LoadCadaver : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
     void writeCadaverAssetToFile(Texture3D volData)
     {
         string filename = legendLoader.systemID + "_" + legendLoader.subsystemID + "_" + legendLoader.bodyPartID + "-Asset.asset";
         AssetDatabase.CreateAsset(volData, "Assets/Resources/Cadaver Assets/" + filename);
     }
-
+#endif
 }
