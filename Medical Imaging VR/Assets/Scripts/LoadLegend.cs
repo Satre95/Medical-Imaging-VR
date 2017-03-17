@@ -27,7 +27,7 @@ public class LoadLegend : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        LegendSystemPath = Application.dataPath + "/Resources/Legend/";
+        LegendSystemPath = Application.dataPath + "/Resources/Legend_512/";
         imageColors = new List<Color>();
 
         string folderPath = constructPathForSelectedIDs();
@@ -136,7 +136,7 @@ public class LoadLegend : MonoBehaviour
         int i;
         for(i = 0; i < folders.Length; i++)
         {
-            if(folders[i] == "Legend")
+            if(folders[i] == "Legend_512")
             {
                 break;
             }
@@ -147,7 +147,6 @@ public class LoadLegend : MonoBehaviour
         {
             finalPath += folders[j] + "/";
         }
-
         return finalPath;
 
     }

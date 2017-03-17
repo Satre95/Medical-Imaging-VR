@@ -30,7 +30,7 @@
 
 #include "UnityCG.cginc"
 
-		sampler3D Legend_Data;
+		//sampler3D Legend_Data;
 		sampler3D Cadaver_Data;
 		float _SliceAxis1Min, _SliceAxis1Max;
 		float _SliceAxis2Min, _SliceAxis2Max;
@@ -107,15 +107,15 @@
 		*/
 		float4 getData(float3 pos) {
 			//Sample the legend
-			float4 legendSample = sampleVolume(pos, Legend_Data);
+			//float4 legendSample = sampleVolume(pos, Legend_Data);
 			//Need to invert the legend sample, as black values signify voxels to keep
-			legendSample.rgb = float3(1, 1, 1) - legendSample.rgb;
-			legendSample.a = legendSample.r;
+			//legendSample.rgb = float3(1, 1, 1) - legendSample.rgb;
+			//legendSample.a = legendSample.r;
 			//Sample the cadaver
 			float4 cadaverSample = sampleVolume(pos, Cadaver_Data);
-
+			cadaverSample.a = cadaverSample.r;
 			//Legend data is always 0 or 1, so just multiply to avoid an if statement
-			return cadaverSample * legendSample;
+			return cadaverSample;
 		}
 
 
